@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model alembic_version {
+  version_num String @id(map: "alembic_version_pkc") @db.VarChar(32)
+}
+
+model comments {
+  id         Int       @id @default(autoincrement())
+  comment    String?   @db.VarChar
+  date_added String?   @db.VarChar
+  release_id Int?
+  user_id    Int?
+  releases   releases? @relation(fields: [release_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_comments_release_id_releases")
+  users      users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_comments_user_id_users")
+}
+
+model events {
+  id         Int     @id @default(autoincrement())
+  name       String? @db.VarChar
+  venue      String? @db.VarChar
+  location   String? @db.VarChar
+  details    String? @db.VarChar
+  image_url  String? @db.VarChar
+  event_date String? @db.VarChar
+  event_link String? @db.VarChar
+}
+
+model forum_messages {
+  id              Int            @id @default(autoincrement())
+  message         String?        @db.VarChar
+  date_added      String?        @db.VarChar
+  gif             String?        @db.VarChar
+  user_id         Int?
+  forum_thread_id Int?
+  forum_threads   forum_threads? @relation(fields: [forum_thread_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_forum_messages_forum_thread_id_forum_threads")
+  users           users?         @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_forum_messages_user_id_users")
+}
+
+model forum_threads {
+  id             Int              @id @default(autoincrement())
+  name           String?          @db.VarChar
+  forum_messages forum_messages[]
+}
+
+model post_comments {
+  id         Int     @id @default(autoincrement())
+  comment    String? @db.VarChar
+  date_added String? @db.VarChar
+  post_id    Int?
+  user_id    Int?
+  posts      posts?  @relation(fields: [post_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_comments_post_id_posts")
+  users      users?  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_comments_user_id_users")
+}
+
+model posts {
+  id            Int             @id @default(autoincrement())
+  title         String?         @db.VarChar
+  content       String?         @db.VarChar
+  image_url     String?         @db.VarChar
+  date_added    String?         @db.VarChar
+  link          String?         @db.VarChar
+  post_comments post_comments[]
+}
+
+model releases {
+  id            Int           @id @default(autoincrement())
+  title         String?       @db.VarChar
+  artist        String?       @db.VarChar
+  description   String?       @db.VarChar
+  record_label  String?       @db.VarChar
+  date_released String?       @db.VarChar
+  image         String?       @db.VarChar
+  buy_link      String?       @db.VarChar
+  comments      comments[]
+  saved_items   saved_items[]
+  tracks        tracks[]
+}
+
+model saved_items {
+  id         Int       @id @default(autoincrement())
+  release_id Int?
+  user_id    Int?
+  releases   releases? @relation(fields: [release_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_saved_items_release_id_releases")
+  users      users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_saved_items_user_id_users")
+}
+
+model tracks {
+  id           Int       @id @default(autoincrement())
+  title        String?   @db.VarChar
+  bpm          Int?
+  audio        String?   @db.VarChar
+  artist_names String?   @db.VarChar
+  release_id   Int?
+  dropbox_url  String?   @db.VarChar
+  releases     releases? @relation(fields: [release_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tracks_release_id_releases")
+}
+
+model users {
+  id             Int              @id @default(autoincrement())
+  username       String           @unique(map: "ix_users_username") @db.VarChar
+  password_hash  String           @map("_password_hash") @db.VarChar
+  email          String?          @unique @db.VarChar
+  is_admin       Boolean?
+  avatar         String?          @db.VarChar
+  city           String?          @db.VarChar
+  country        String?          @db.VarChar
+  latitude       Float?
+  longitude      Float?
+  comments       comments[]
+  forum_messages forum_messages[]
+  post_comments  post_comments[]
+  saved_items    saved_items[]
+}
