@@ -7,8 +7,14 @@ import { ChevronDown, Music, Calendar } from "lucide-react";
 import Link from "next/link";
 
 export function Hero() {
+  const handleScroll = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  };
   return (
-    <div className="relative h-[90vh]">
+    <div className="relative h-[calc(100dvh-4rem)]">
       {/* Background Image with Parallax */}
       <motion.div
         initial={{ scale: 1.1 }}
@@ -16,12 +22,22 @@ export function Hero() {
         transition={{ duration: 1.5, ease: "easeOut" }}
         className="absolute inset-0 z-0"
       >
+        {/* Mobile Image */}
         <Image
-          src="/SL-banner.jpg"
-          alt="Superluminal Hero"
+          src="/cats.png"
+          alt="Superluminal Hero Mobile"
           fill
           priority
-          className="object-cover object-[80%_center] md:object-[center_15%]"
+          className="object-cover object-center lg:hidden"
+          sizes="100vw"
+        />
+        {/* Desktop Image */}
+        <Image
+          src="/SL-banner.jpg"
+          alt="Superluminal Hero Desktop"
+          fill
+          priority
+          className="hidden lg:block object-cover object-[center_15%]"
           sizes="100vw"
         />
         {/* Gradient Overlay */}
@@ -29,12 +45,12 @@ export function Hero() {
       </motion.div>
 
       {/* Content */}
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 text-center">
+      <div className="relative z-10 flex min-h-full flex-col items-center justify-center px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="flex flex-col sm:flex-row justify-center gap-4 mt-24 sm:mt-48"
+          className="flex flex-col sm:flex-row justify-center gap-4 mt-0 lg:mt-80"
         >
           <Link href="/music">
             <Button
@@ -61,6 +77,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          onClick={handleScroll}
           transition={{ duration: 0.8, delay: 1.4 }}
           className="absolute bottom-8 sm:bottom-16 left-1/2 -translate-x-1/2"
         >

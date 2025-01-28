@@ -23,7 +23,6 @@ A modern, responsive website built with Next.js for Superluminal - a psychedelic
 - **Animation**: [Framer Motion](https://www.framer.com/motion/)
 - **Database**: [PostgreSQL](https://www.postgresql.org/) with [Prisma](https://www.prisma.io/)
 - **State Management**: [TanStack Query](https://tanstack.com/query)
-- **Authentication**: Built-in Next.js authentication
 - **Deployment**: [Vercel](https://vercel.com)
 
 ## Getting Started
@@ -124,28 +123,21 @@ Open http://localhost:3000 to view the site.
 - Efficient data fetching with React Query
 - Asset preloading for critical resources
 
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Contact
 
-Your Name - @yourusername
-Project Link: https://github.com/yourusername/superluminal-website
+David Mostoller
+dave.mostoller.dev@gmail.com
 
 ## Acknowledgments
 
 - shadcn/ui for the excellent component library
 - Vercel for hosting
 - TanStack Query for data fetching
-- Prisma for database management
 
 Built with ❤️ using Next.js and TypeScript
+
+Visit the deployed website here: [https://www.superluminalpsy.com/](https://www.superluminalpsy.com/)
